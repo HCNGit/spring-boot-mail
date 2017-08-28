@@ -17,13 +17,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;  
 import hcn.springboot.mail.service.MailService;
+/*1.4.0版本前
+@RunWith(SpringJUnit4ClassRunner.class)  
+@SpringApplicationConfiguration(classes = SpringbootMailApplication.class)  
+@WebAppConfiguration  */
 
-
-// 一般的junit Test没有这两个注解，但是在springboot项目中单元测试如果少了这两个注解经常会出错
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)表示要进行spring的全部流程启动单元测试，也就是说会类似于spring的正常启动启动服务
+@RunWith(SpringJUnit4ClassRunner.class) 
+@SpringBootTest   //1.4.0版本后， 表示使用spring-boot的方式启动单元测试，
 public class MailServiceImplTest {
 
     @Autowired
@@ -109,6 +112,7 @@ public class MailServiceImplTest {
     }
 
     @Ignore
+    @Test
     public void testSendAttachmentsMail() {
         String filePath = "D:\\黄春宁\\Pictures\\桌面\\008.jpg";
         mailService.sendAttachmentsMail("2207256221@qq.com", "主题：带附件的邮件", "有附件，请查收！", filePath);
@@ -116,6 +120,7 @@ public class MailServiceImplTest {
     }
 
     @Ignore
+    @Test
     public void testSendInlineResourceMail() {
         String rscId1 = "pic1";
         String rscId2 = "pic2";
@@ -130,6 +135,7 @@ public class MailServiceImplTest {
     }
 
     @Ignore
+    @Test
     public void testSendTemplateMail() {
         // 创建邮件正文
         Context context = new Context();
